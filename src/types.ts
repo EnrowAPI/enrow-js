@@ -15,8 +15,7 @@ export interface RequestSettings {
 export interface EmailFindParams {
   companyDomain?: string;
   companyName?: string;
-  firstName?: string;
-  lastName?: string;
+  fullName: string;
   settings?: RequestSettings;
 }
 
@@ -36,8 +35,7 @@ export interface EmailFindBulkParams {
   searches: Array<{
     companyDomain?: string;
     companyName?: string;
-    firstName?: string;
-    lastName?: string;
+    fullName: string;
     custom?: Record<string, unknown>;
   }>;
   settings?: RequestSettings;
@@ -93,7 +91,7 @@ export interface VerifySingleResult {
 }
 
 export interface VerifyBulkParams {
-  emails: string[];
+  verifications: string[];
   settings?: { webhook?: string };
   custom?: Record<string, unknown>;
 }
@@ -134,8 +132,8 @@ export interface PhoneFindResponse {
 export interface PhoneFindResult {
   id: string;
   qualification: 'found' | 'not_found' | 'ongoing';
-  phone: string;
-  countryCode: string;
+  number: string;
+  country: string;
 }
 
 export interface PhoneFindBulkParams {
@@ -163,8 +161,8 @@ export interface PhoneBulkResult {
   results: Array<{
     index: number;
     qualification: 'found' | 'not_found';
-    phone: string;
-    countryCode: string;
+    number: string;
+    country: string;
     custom?: unknown;
   }>;
 }
@@ -219,7 +217,6 @@ export interface ReverseEmailBulkResult {
 
 export interface AccountInfo {
   credits: number;
-  webhooks: string[];
 }
 
 // ── Polling ──

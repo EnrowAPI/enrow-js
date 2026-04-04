@@ -39,8 +39,7 @@ describe('EmailFinder', () => {
 
     const result = await enrow.email.find({
       companyDomain: 'apple.com',
-      firstName: 'Tim',
-      lastName: 'Cook',
+      fullName: 'Tim Cook',
     });
 
     expect(mockFetch).toHaveBeenCalledWith(
@@ -56,7 +55,7 @@ describe('EmailFinder', () => {
 
     const body = JSON.parse(mockFetch.mock.calls[0][1].body);
     expect(body.company_domain).toBe('apple.com');
-    expect(body.first_name).toBe('Tim');
+    expect(body.fullname).toBe('Tim Cook');
 
     expect(result.email).toBe('tcook@apple.com');
     expect(result.qualification).toBe('valid');
@@ -76,7 +75,7 @@ describe('EmailFinder', () => {
     const result = await enrow.email.get('search_123');
 
     expect(mockFetch).toHaveBeenCalledWith(
-      'https://api.enrow.io/email/find/single/search_123',
+      'https://api.enrow.io/email/find/single?id=search_123',
       expect.objectContaining({ method: 'GET' })
     );
     expect(result.email).toBe('tcook@apple.com');
@@ -94,8 +93,8 @@ describe('EmailFinder', () => {
 
     const result = await enrow.email.findBulk({
       searches: [
-        { companyDomain: 'apple.com', firstName: 'Tim', lastName: 'Cook' },
-        { companyDomain: 'microsoft.com', firstName: 'Satya', lastName: 'Nadella' },
+        { companyDomain: 'apple.com', fullName: 'Tim Cook' },
+        { companyDomain: 'microsoft.com', fullName: 'Satya Nadella' },
       ],
     });
 
@@ -121,7 +120,7 @@ describe('EmailFinder', () => {
       );
 
     const result = await enrow.email.find(
-      { companyDomain: 'apple.com', firstName: 'Tim', lastName: 'Cook' },
+      { companyDomain: 'apple.com', fullName: 'Tim Cook' },
       { waitForResult: true, pollInterval: 10, timeout: 5000 }
     );
 

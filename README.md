@@ -17,8 +17,7 @@ const enrow = new Enrow('your_api_key');
 
 const result = await enrow.email.find({
   companyDomain: 'apple.com',
-  firstName: 'Tim',
-  lastName: 'Cook',
+  fullName: 'Tim Cook',
 });
 
 console.log(result.email); // tcook@apple.com
@@ -30,14 +29,13 @@ console.log(result.email); // tcook@apple.com
 // Find a single email
 const search = await enrow.email.find({
   companyDomain: 'apple.com',
-  firstName: 'Tim',
-  lastName: 'Cook',
+  fullName: 'Tim Cook',
   settings: { countryCode: 'US' },
 });
 
 // Wait for result (auto-polling)
 const result = await enrow.email.find(
-  { companyDomain: 'apple.com', firstName: 'Tim', lastName: 'Cook' },
+  { companyDomain: 'apple.com', fullName: 'Tim Cook' },
   { waitForResult: true, pollInterval: 2000, timeout: 30000 }
 );
 
@@ -47,8 +45,8 @@ const result = await enrow.email.get('search_abc123');
 // Bulk search
 const batch = await enrow.email.findBulk({
   searches: [
-    { companyDomain: 'apple.com', firstName: 'Tim', lastName: 'Cook' },
-    { companyDomain: 'microsoft.com', firstName: 'Satya', lastName: 'Nadella' },
+    { companyDomain: 'apple.com', fullName: 'Tim Cook' },
+    { companyDomain: 'microsoft.com', fullName: 'Satya Nadella' },
   ],
   settings: { webhook: 'https://yourapp.com/webhook' },
 });
@@ -64,7 +62,7 @@ console.log(verification.qualification); // "valid"
 console.log(verification.checks.mailboxExists); // true
 
 // Bulk
-const batch = await enrow.verify.bulk({ emails: ['a@b.com', 'c@d.com'] });
+const batch = await enrow.verify.bulk({ verifications: ['a@b.com', 'c@d.com'] });
 const results = await enrow.verify.getBulk(batch.batchId);
 ```
 
@@ -119,7 +117,7 @@ console.log(account.credits); // 8500
 import Enrow, { RateLimitError, InsufficientBalanceError, EnrowError } from 'enrow';
 
 try {
-  await enrow.email.find({ companyDomain: 'apple.com', firstName: 'Tim', lastName: 'Cook' });
+  await enrow.email.find({ companyDomain: 'apple.com', fullName: 'Tim Cook' });
 } catch (err) {
   if (err instanceof RateLimitError) {
     // 429 — too many requests
