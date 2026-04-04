@@ -52,6 +52,5 @@ export type {
   AccountInfo,
   PollOptions,
   Company,
-  VerifyChecks,
-  VerifyMetadata,
+  RequestSettings,
 } from './types';

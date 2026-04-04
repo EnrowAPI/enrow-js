@@ -19,7 +19,7 @@ export class AuthenticationError extends EnrowError {
 
 export class InsufficientBalanceError extends EnrowError {
   constructor(message = 'Your credit balance is insufficient.') {
-    super(402, 'InsufficientBalance', message);
+    super(422, 'InsufficientBalance', message);
     this.name = 'InsufficientBalanceError';
   }
 }

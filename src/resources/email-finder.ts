@@ -21,6 +21,7 @@ export class EmailFinder {
     if (params.fullName) body.fullname = params.fullName;
     if (params.companyDomain) body.company_domain = params.companyDomain;
     if (params.companyName) body.company_name = params.companyName;
+    if (params.custom) body.custom = params.custom;
     if (params.settings) body.settings = toSnakeCase(params.settings);
     const result = await this.http.post<unknown>('/email/find/single', body);
     const parsed = toCamelCase(result) as EmailFindResult;
@@ -48,6 +49,7 @@ export class EmailFinder {
         return item;
       }),
     };
+    if (params.custom) body.custom = params.custom;
     if (params.settings) body.settings = toSnakeCase(params.settings);
     const result = await this.http.post<unknown>('/email/find/bulk', body);
     return toCamelCase(result) as EmailFindBulkResponse;

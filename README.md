@@ -33,6 +33,15 @@ const search = await enrow.email.find({
   settings: { countryCode: 'US' },
 });
 
+// Pass custom data and request gender detection
+const result = await enrow.email.find({
+  companyDomain: 'apple.com',
+  fullName: 'Tim Cook',
+  custom: { internalId: '42', source: 'crm' },
+  settings: { retrieveGender: true },
+});
+console.log(result.info?.gender); // "male"
+
 // Wait for result (auto-polling)
 const result = await enrow.email.find(
   { companyDomain: 'apple.com', fullName: 'Tim Cook' },
@@ -59,10 +68,9 @@ const results = await enrow.email.getBulk(batch.batchId);
 ```typescript
 const verification = await enrow.verify.single({ email: 'tcook@apple.com' });
 console.log(verification.qualification); // "valid"
-console.log(verification.checks.mailboxExists); // true
 
 // Bulk
-const batch = await enrow.verify.bulk({ verifications: ['a@b.com', 'c@d.com'] });
+const batch = await enrow.verify.bulk({ emails: ['a@b.com', 'c@d.com'] });
 const results = await enrow.verify.getBulk(batch.batchId);
 ```
 
@@ -123,7 +131,7 @@ try {
     // 429 — too many requests
   }
   if (err instanceof InsufficientBalanceError) {
-    // 402 — not enough credits
+    // 422 — not enough credits
   }
   if (err instanceof EnrowError) {
     console.log(err.status, err.message);

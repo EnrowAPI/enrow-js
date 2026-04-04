@@ -8,6 +8,7 @@ export interface Company {
 export interface RequestSettings {
   countryCode?: string;
   webhook?: string;
+  retrieveGender?: boolean;
 }
 
 // ── Email Finder ──
@@ -16,6 +17,7 @@ export interface EmailFindParams {
   companyDomain?: string;
   companyName?: string;
   fullName: string;
+  custom?: Record<string, unknown>;
   settings?: RequestSettings;
 }
 
@@ -29,6 +31,13 @@ export interface EmailFindResult {
   company: Company;
   verified: boolean;
   creditsUsed: number;
+  info?: {
+    companyDomain: string;
+    firstname: string;
+    lastname: string;
+    gender?: string;
+  };
+  custom?: Record<string, unknown>;
 }
 
 export interface EmailFindBulkParams {
@@ -36,8 +45,9 @@ export interface EmailFindBulkParams {
     companyDomain?: string;
     companyName?: string;
     fullName: string;
-    custom?: Record<string, unknown>;
+    custom?: string;
   }>;
+  custom?: Record<string, unknown>;
   settings?: RequestSettings;
 }
 
@@ -49,11 +59,20 @@ export interface EmailFindBulkResponse {
 }
 
 export interface EmailFindBulkResult {
-  batchId: string;
-  status: 'completed' | 'processing' | 'partial';
-  total: number;
-  completed: number;
-  creditsUsed: number;
+  general: {
+    id: string;
+    status: string;
+  };
+  stats: {
+    finished: number;
+    requested: number;
+    valid: number;
+    creditsCost: {
+      initial: number;
+      refunded: number;
+      final: number;
+    };
+  };
   results: Array<EmailFindResult & { custom?: Record<string, unknown> }>;
 }
 
@@ -64,34 +83,14 @@ export interface VerifySingleParams {
   settings?: { webhook?: string };
 }
 
-export interface VerifyChecks {
-  syntaxValid: boolean;
-  domainValid: boolean;
-  mxFound: boolean;
-  smtpValid: boolean;
-  mailboxExists: boolean;
-}
-
-export interface VerifyMetadata {
-  isDisposable: boolean;
-  isRole: boolean;
-  isFree: boolean;
-  isCatchAll: boolean;
-  provider: string;
-}
-
 export interface VerifySingleResult {
-  id: string;
   email: string;
   qualification: 'valid' | 'invalid';
-  isDeliverable: boolean;
-  checks: VerifyChecks;
-  metadata: VerifyMetadata;
-  creditsUsed: number;
+  custom?: Record<string, unknown>;
 }
 
 export interface VerifyBulkParams {
-  verifications: string[];
+  emails: string[];
   settings?: { webhook?: string };
   custom?: Record<string, unknown>;
 }
@@ -130,10 +129,11 @@ export interface PhoneFindResponse {
 }
 
 export interface PhoneFindResult {
-  id: string;
-  qualification: 'found' | 'not_found' | 'ongoing';
   number: string;
   country: string;
+  qualification: 'found' | 'not_found' | 'ongoing';
+  params: Record<string, unknown>;
+  custom?: Record<string, unknown>;
 }
 
 export interface PhoneFindBulkParams {
@@ -217,6 +217,7 @@ export interface ReverseEmailBulkResult {
 
 export interface AccountInfo {
   credits: number;
+  webhooks: string[];
 }
 
 // ── Polling ──
