@@ -1,5 +1,9 @@
 # Enrow Node.js / TypeScript SDK
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/EnrowAPI/enrow-js)](https://github.com/EnrowAPI/enrow-js)
+[![Last commit](https://img.shields.io/github/last-commit/EnrowAPI/enrow-js)](https://github.com/EnrowAPI/enrow-js/commits)
+
 Find and verify professional emails, phone numbers, and contact information with the [Enrow API](https://enrow.io).
 
 ## Install

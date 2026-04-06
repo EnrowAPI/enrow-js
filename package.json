@@ -33,7 +33,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/enrow/enrow-js"
+    "url": "https://github.com/EnrowAPI/enrow-js"
   },
   "homepage": "https://docs.enrow.io",
   "engines": {
