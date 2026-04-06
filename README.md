@@ -102,20 +102,6 @@ const result = await enrow.phone.find(
 const details = await enrow.phone.get('phone_abc123');
 ```
 
-## Reverse Email
-
-```typescript
-const person = await enrow.reverseEmail.find({ email: 'tcook@apple.com' });
-console.log(person.firstName); // "Tim"
-console.log(person.linkedinUrl); // "https://linkedin.com/in/timcook"
-
-// Bulk
-const batch = await enrow.reverseEmail.findBulk({
-  emails: [{ email: 'tcook@apple.com' }, { email: 'snadella@microsoft.com' }],
-});
-const results = await enrow.reverseEmail.getBulk(batch.id);
-```
-
 ## Account
 
 ```typescript
@@ -150,7 +136,6 @@ try {
 | Email Finder | 1 credit/email |
 | Email Verifier | 0.25 credit/email |
 | Phone Finder | 50 credits/phone |
-| Reverse Email | 5 credits/lookup |
 
 ## Links
 
